@@ -7,6 +7,8 @@ import root.dongmin.springbootdeveloper.domain.Article;
 import root.dongmin.springbootdeveloper.dto.AddArticleRequest;
 import root.dongmin.springbootdeveloper.repository.BlogRepository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class BlogService {
@@ -17,4 +19,9 @@ public class BlogService {
     public Article save(AddArticleRequest request){
         return blogRepository.save(request.toEntity());
     }
+
+    // 글 목록 조회 메서드
+    public List<Article> findAll(){return blogRepository.findAll();}
+
+
 }
