@@ -2,7 +2,9 @@ package root.dongmin.springbootdeveloper.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Article {
 
@@ -38,6 +40,11 @@ public class Article {
         return content;
     }
     //위 3개의 get 메서드 들도 @Getter 어노테이션으로 대체 가능하다.
+
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 }
 
 
