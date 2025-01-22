@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import root.dongmin.springbootdeveloper.domain.Article;
 import root.dongmin.springbootdeveloper.dto.ArticleListViewResponse;
 import root.dongmin.springbootdeveloper.dto.ArticleViewResponse;
@@ -32,7 +33,19 @@ public class BlogViewController {
     public String getArticle(@PathVariable("id") Long id, Model model){
         Article article = blogService.findById(id);
         model.addAttribute("article" , new ArticleViewResponse(article));
-
+        //model.addAttribute(참조키,실제 객체데이터) -> JSP 나 Thymeleaf 에서 사용
         return "article";
+    }
+
+    @GetMapping("/new-article")
+    // id 키를 가진 쿼리 파라미터의 값을 id 변수에 매핑(id는 없을수도 있음)
+    public String newArticle(@RequestParam(value = "id",required = false) Long id, Model model){
+        if(id == null){ //글 id가 없다면 생성
+            model.addAttribute("article",new ArticleViewResponse());
+        }else{ //글 id가 있다면 조회
+            Article article = blogService.findById(id);
+            model.addAttribute("article",new ArticleViewResponse(article));
+        }
+        return "newArticle"; // newArticle.html 이라는 뷰 조회
     }
 }
