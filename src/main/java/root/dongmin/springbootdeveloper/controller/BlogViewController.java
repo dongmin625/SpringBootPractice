@@ -3,10 +3,9 @@ package root.dongmin.springbootdeveloper.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import root.dongmin.springbootdeveloper.domain.Article;
+import root.dongmin.springbootdeveloper.dto.AddArticleRequest;
 import root.dongmin.springbootdeveloper.dto.ArticleListViewResponse;
 import root.dongmin.springbootdeveloper.dto.ArticleViewResponse;
 import root.dongmin.springbootdeveloper.service.BlogService;
@@ -48,4 +47,12 @@ public class BlogViewController {
         }
         return "newArticle"; // newArticle.html 이라는 뷰 조회
     }
+
+    @PostMapping("/new-article")
+    public String createArticle(@ModelAttribute AddArticleRequest request) {
+        blogService.save(request); // 새로운 글을 저장
+        return "redirect:/articles"; // 글 목록 페이지로 리다이렉트
+    }
+
+
 }

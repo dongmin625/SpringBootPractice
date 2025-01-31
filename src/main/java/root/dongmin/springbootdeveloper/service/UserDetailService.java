@@ -14,9 +14,10 @@ public class UserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
     // 사용자 이름(이메일) 로 사용자의 정보를 가져옴
-    @Override //UserDetails 를 구현 받은 클래스 타입으로
-    public User loadUserByUsername(String email){
+    @Override
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
+        // 이메일로 사용자 검색
         return userRepository.findByEmail(email)
-                .orElseThrow(()->new IllegalArgumentException(email));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));  // UsernameNotFoundException으로 변경
     }
 }
